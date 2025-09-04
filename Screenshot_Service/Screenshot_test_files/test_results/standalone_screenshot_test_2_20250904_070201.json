@@ -1,0 +1,21 @@
+{
+  "test_info": {
+    "url": "https://example.com",
+    "test_time": "2025-09-04T07:02:01.527745",
+    "test_type": "standalone_direct",
+    "test_number": 2
+  },
+  "url": "https://example.com",
+  "status": "completed",
+  "result": {
+    "success": true,
+    "url": "https://example.com",
+    "file_path": "D:\\Python_Projects\\AEO-Maker\\Screenshot_Service\\screenshots\\20250904\\example.com_20250904_033201.png",
+    "width": 1366,
+    "height": 752
+  },
+  "screenshot_path": "D:\\Python_Projects\\AEO-Maker\\Screenshot_Service\\screenshots\\20250904\\example.com_20250904_033201.png",
+  "screenshot_width": 1366,
+  "screenshot_height": 752,
+  "duration_seconds": 7.272194147109985
+}

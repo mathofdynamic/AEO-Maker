@@ -1,0 +1,74 @@
+{
+  "test_summary": {
+    "total_tests": 3,
+    "successful_tests": 3,
+    "failed_tests": 0,
+    "test_time": "2025-09-04T07:02:16.057010",
+    "test_type": "standalone_screenshot_combined"
+  },
+  "results": [
+    {
+      "test_info": {
+        "url": "https://droplinked.com",
+        "test_time": "2025-09-04T07:01:52.145121",
+        "test_type": "standalone_direct",
+        "test_number": 1
+      },
+      "url": "https://droplinked.com",
+      "status": "completed",
+      "result": {
+        "success": true,
+        "url": "https://droplinked.com",
+        "file_path": "D:\\Python_Projects\\AEO-Maker\\Screenshot_Service\\screenshots\\20250904\\droplinked.com_20250904_033152.png",
+        "width": 1366,
+        "height": 13640
+      },
+      "screenshot_path": "D:\\Python_Projects\\AEO-Maker\\Screenshot_Service\\screenshots\\20250904\\droplinked.com_20250904_033152.png",
+      "screenshot_width": 1366,
+      "screenshot_height": 13640,
+      "duration_seconds": 14.504954099655151
+    },
+    {
+      "test_info": {
+        "url": "https://example.com",
+        "test_time": "2025-09-04T07:02:01.527745",
+        "test_type": "standalone_direct",
+        "test_number": 2
+      },
+      "url": "https://example.com",
+      "status": "completed",
+      "result": {
+        "success": true,
+        "url": "https://example.com",
+        "file_path": "D:\\Python_Projects\\AEO-Maker\\Screenshot_Service\\screenshots\\20250904\\example.com_20250904_033201.png",
+        "width": 1366,
+        "height": 752
+      },
+      "screenshot_path": "D:\\Python_Projects\\AEO-Maker\\Screenshot_Service\\screenshots\\20250904\\example.com_20250904_033201.png",
+      "screenshot_width": 1366,
+      "screenshot_height": 752,
+      "duration_seconds": 7.272194147109985
+    },
+    {
+      "test_info": {
+        "url": "https://httpbin.org",
+        "test_time": "2025-09-04T07:02:13.985625",
+        "test_type": "standalone_direct",
+        "test_number": 3
+      },
+      "url": "https://httpbin.org",
+      "status": "completed",
+      "result": {
+        "success": true,
+        "url": "https://httpbin.org",
+        "file_path": "D:\\Python_Projects\\AEO-Maker\\Screenshot_Service\\screenshots\\20250904\\httpbin.org_20250904_033213.png",
+        "width": 1366,
+        "height": 1256
+      },
+      "screenshot_path": "D:\\Python_Projects\\AEO-Maker\\Screenshot_Service\\screenshots\\20250904\\httpbin.org_20250904_033213.png",
+      "screenshot_width": 1366,
+      "screenshot_height": 1256,
+      "duration_seconds": 10.391598463058472
+    }
+  ]
+}

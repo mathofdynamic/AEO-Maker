@@ -1,0 +1,21 @@
+{
+  "test_info": {
+    "url": "https://droplinked.com",
+    "test_time": "2025-09-04T07:01:52.145121",
+    "test_type": "standalone_direct",
+    "test_number": 1
+  },
+  "url": "https://droplinked.com",
+  "status": "completed",
+  "result": {
+    "success": true,
+    "url": "https://droplinked.com",
+    "file_path": "D:\\Python_Projects\\AEO-Maker\\Screenshot_Service\\screenshots\\20250904\\droplinked.com_20250904_033152.png",
+    "width": 1366,
+    "height": 13640
+  },
+  "screenshot_path": "D:\\Python_Projects\\AEO-Maker\\Screenshot_Service\\screenshots\\20250904\\droplinked.com_20250904_033152.png",
+  "screenshot_width": 1366,
+  "screenshot_height": 13640,
+  "duration_seconds": 14.504954099655151
+}
