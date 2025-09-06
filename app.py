@@ -220,9 +220,10 @@ def start_all_services():
         else:
             print(f"❌ {service['name']} script not found: {script_path}")
     
-    # Wait for services to initialize
+    # Wait for services to initialize (longer on Windows due to socket issues)
     print("⏳ Waiting for services to initialize...")
-    time.sleep(5)
+    wait_time = 8 if platform.system() == "Windows" else 5
+    time.sleep(wait_time)
     
     # Check service health
     print("🔍 Checking service health...")
@@ -1014,7 +1015,9 @@ if __name__ == '__main__':
         print("=" * 50)
         
         # Run the application
-        socketio.run(app, host='0.0.0.0', port=5001, debug=True)
+        # Disable debug mode on Windows to avoid socket conflicts
+        debug_mode = platform.system() != 'Windows'
+        socketio.run(app, host='0.0.0.0', port=5001, debug=debug_mode)
         
     except KeyboardInterrupt:
         print("\n🛑 Application stopped by user")

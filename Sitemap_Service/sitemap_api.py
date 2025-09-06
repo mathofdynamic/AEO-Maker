@@ -1,5 +1,6 @@
 import json
 import os
+import platform
 import urllib.parse
 import threading
 import time
@@ -506,4 +507,6 @@ if __name__ == "__main__":
     print("  GET  /jobs - List all jobs")
     print("  GET  /health - Health check")
     
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # Disable debug mode on Windows to avoid socket conflicts
+    debug_mode = platform.system() != 'Windows'
+    app.run(debug=debug_mode, host='0.0.0.0', port=5000)
