@@ -1,6 +1,7 @@
 import time
 import uuid
 import os
+from datetime import datetime
 from fastapi import FastAPI, BackgroundTasks, HTTPException
 from pydantic import BaseModel, Field
 from typing import Optional, Dict, Any, List
@@ -52,22 +53,9 @@ def scrape_website_text(url: str) -> List[str]:
     chrome_options.add_experimental_option('useAutomationExtension', False)
     chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
 
-    # Fix ChromeDriver path issue
-    driver_path = ChromeDriverManager().install()
-    # If the path ends with THIRD_PARTY_NOTICES.chromedriver, find the actual executable
-    if 'THIRD_PARTY_NOTICES.chromedriver' in driver_path:
-        base_dir = os.path.dirname(driver_path)
-        actual_driver = os.path.join(base_dir, 'chromedriver.exe')
-        if os.path.exists(actual_driver):
-            driver_path = actual_driver
-        else:
-            # Try alternative paths
-            for file in os.listdir(base_dir):
-                if file.endswith('.exe') and 'chromedriver' in file.lower():
-                    driver_path = os.path.join(base_dir, file)
-                    break
-    
-    service = Service(driver_path)
+    # Use system Chrome directly instead of downloading ChromeDriver
+    # This avoids location-based download restrictions
+    service = Service()  # Let Selenium find Chrome automatically
     driver = None
     try:
         driver = webdriver.Chrome(service=service, options=chrome_options)
@@ -78,20 +66,20 @@ def scrape_website_text(url: str) -> List[str]:
         
         # Wait for initial page load
         print("Waiting for initial page load...")
-        time.sleep(3)
+        time.sleep(1)  # Reduced from 2 to 1
         
-        # Scroll to load lazy content
+        # Scroll to load lazy content (optimized)
         print("Scrolling to load dynamic content...")
         last_height = driver.execute_script("return document.body.scrollHeight")
         
-        for i in range(3):  # Scroll 3 times to load lazy content
+        for i in range(1):  # Reduced from 2 to 1 scroll
             # Scroll down
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(2)
+            time.sleep(0.5)  # Reduced from 1 to 0.5
             
             # Scroll back up
             driver.execute_script("window.scrollTo(0, 0);")
-            time.sleep(1)
+            time.sleep(0.3)  # Reduced from 0.5 to 0.3
             
             # Check if page height changed (new content loaded)
             new_height = driver.execute_script("return document.body.scrollHeight")
@@ -99,9 +87,9 @@ def scrape_website_text(url: str) -> List[str]:
                 break
             last_height = new_height
         
-        # Wait for any remaining dynamic content
+        # Wait for any remaining dynamic content (reduced)
         print("Waiting for final content to load...")
-        time.sleep(3)
+        time.sleep(0.5)  # Reduced from 1 to 0.5
         
         # Get the final page source
         page_source = driver.page_source
@@ -168,6 +156,14 @@ async def start_scraping_job(scrape_request: ScrapeRequest, background_tasks: Ba
 
     # Return the initial job status
     return {"job_id": job_id, "status": "pending", "result": None}
+
+
+@app.get("/health")
+async def health_check():
+    """
+    Health check endpoint for the scraper service.
+    """
+    return {"status": "healthy", "service": "scraper_api", "timestamp": datetime.now().isoformat()}
 
 
 @app.get("/jobs/{job_id}", response_model=Job)

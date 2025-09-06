@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEO Maker - Professional Website Analysis</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🤖%3C/text%3E%3C/svg%3E">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    
+    <!-- SocketIO with multiple fallbacks -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.4/socket.io.js" 
+            onerror="console.log('Primary SocketIO CDN failed')"></script>
+    <script>
+        // If SocketIO still not loaded, try alternative CDNs
+        if (typeof io === 'undefined') {
+            console.log('Trying alternative SocketIO CDN...');
+            const script1 = document.createElement('script');
+            script1.src = 'https://cdn.socket.io/4.0.4/socket.io.min.js';
+            script1.onerror = function() {
+                console.log('Second SocketIO CDN also failed');
+                // Try unpkg as final fallback
+                const script2 = document.createElement('script');
+                script2.src = 'https://unpkg.com/socket.io-client@4.0.4/dist/socket.io.min.js';
+                script2.onerror = function() {
+                    console.log('All SocketIO CDNs failed - app will work without real-time updates');
+                };
+                document.head.appendChild(script2);
+            };
+            document.head.appendChild(script1);
+        }
+    </script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-robot nav-icon"></i>
+                <span class="nav-title">AEO Maker</span>
+            </div>
+            <div class="nav-subtitle">Professional Website Analysis & LLM.txt Creation</div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Hero Section -->
+        <section class="hero-section" id="heroSection">
+            <div class="hero-content">
+                <div class="hero-icon">
+                    <i class="fas fa-magic"></i>
+                </div>
+                <h1 class="hero-title">Transform Your Website into AI-Ready Content</h1>
+                <p class="hero-description">
+                    Generate comprehensive LLM.txt files for every page of your website. 
+                    Our advanced system crawls, analyzes, and creates optimized content for AI systems.
+                </p>
+                
+                <!-- URL Input Form -->
+                <div class="input-section">
+                    <form id="urlForm" class="url-form">
+                        <div class="input-group">
+                            <div class="input-icon">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <input 
+                                type="url" 
+                                id="websiteUrl" 
+                                placeholder="Enter your website URL (e.g., https://example.com)"
+                                required
+                                class="url-input"
+                            >
+                            <button type="submit" class="submit-btn" id="submitBtn">
+                                <span class="btn-text">
+                                    <i class="fas fa-rocket"></i>
+                                    Start Analysis
+                                </span>
+                                <div class="btn-loader">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    Processing...
+                                </div>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Features Grid -->
+                <div class="features-grid">
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                        <i class="fas fa-sitemap feature-icon"></i>
+                        <h3>Sitemap Generation</h3>
+                        <p>Automatically discovers all pages on your website</p>
+                    </div>
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                        <i class="fas fa-file-text feature-icon"></i>
+                        <h3>Content Extraction</h3>
+                        <p>Extracts and processes text content from each page</p>
+                    </div>
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                        <i class="fas fa-camera feature-icon"></i>
+                        <h3>Visual Capture</h3>
+                        <p>Takes full-page screenshots for visual context</p>
+                    </div>
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                        <i class="fas fa-brain feature-icon"></i>
+                        <h3>AI Processing</h3>
+                        <p>Generates optimized LLM.txt files for each page</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Processing Section -->
+        <section class="processing-section" id="processingSection" style="display: none;">
+            <div class="processing-container">
+                <div class="processing-header">
+                    <div class="processing-icon">
+                        <i class="fas fa-cogs fa-spin"></i>
+                    </div>
+                    <h2 class="processing-title">Processing Your Website</h2>
+                    <p class="processing-url" id="processingUrl"></p>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span id="progressPercentage">0%</span>
+                        <span id="progressStatus">Initializing...</span>
+                    </div>
+                </div>
+
+                <!-- Processing Steps -->
+                <div class="steps-container">
+                    <div class="step" id="step1">
+                        <div class="step-icon">
+                            <i class="fas fa-sitemap"></i>
+                        </div>
+                        <div class="step-content">
+                            <h3>Generating Sitemap</h3>
+                            <p>Discovering all pages on your website</p>
+                        </div>
+                        <div class="step-status">
+                            <i class="fas fa-clock waiting"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="step" id="step2">
+                        <div class="step-icon">
+                            <i class="fas fa-file-text"></i>
+                        </div>
+                        <div class="step-content">
+                            <h3>Extracting Content</h3>
+                            <p>Scraping text content from each page</p>
+                        </div>
+                        <div class="step-status">
+                            <i class="fas fa-clock waiting"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="step" id="step3">
+                        <div class="step-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <div class="step-content">
+                            <h3>Capturing Screenshots</h3>
+                            <p>Taking visual snapshots of each page</p>
+                        </div>
+                        <div class="step-status">
+                            <i class="fas fa-clock waiting"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="step" id="step4">
+                        <div class="step-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="step-content">
+                            <h3>Generating LLM.txt</h3>
+                            <p>Creating AI-optimized content files</p>
+                        </div>
+                        <div class="step-status">
+                            <i class="fas fa-clock waiting"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logs Section -->
+                <div class="logs-section">
+                    <div class="logs-header">
+                        <h3><i class="fas fa-terminal"></i> Processing Logs</h3>
+                        <button class="logs-toggle" id="logsToggle">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    <div class="logs-container" id="logsContainer">
+                        <div class="logs-content" id="logsContent">
+                            <!-- Logs will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section class="results-section" id="resultsSection" style="display: none;">
+            <div class="results-container">
+                <div class="results-header">
+                    <div class="results-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h2 class="results-title">Analysis Complete!</h2>
+                    <p class="results-summary" id="resultsSummary"></p>
+                    
+                    <div class="results-actions">
+                        <button class="action-btn primary" id="exportBtn">
+                            <i class="fas fa-download"></i>
+                            Export Results
+                        </button>
+                        <button class="action-btn secondary" id="newAnalysisBtn">
+                            <i class="fas fa-plus"></i>
+                            New Analysis
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Results Table -->
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3><i class="fas fa-table"></i> Generated LLM.txt Files</h3>
+                        <div class="table-filters">
+                            <input type="text" id="searchInput" placeholder="Search URLs..." class="search-input">
+                            <button class="filter-btn" id="filterBtn">
+                                <i class="fas fa-filter"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="table-wrapper">
+                        <table class="results-table" id="resultsTable">
+                            <thead>
+                                <tr>
+                                    <th>URL</th>
+                                    <th>Content Preview</th>
+                                    <th>Text Count</th>
+                                    <th>Screenshot</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="resultsTableBody">
+                                <!-- Results will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Error Section -->
+        <section class="error-section" id="errorSection" style="display: none;">
+            <div class="error-container">
+                <div class="error-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h2 class="error-title">Oops! Something went wrong</h2>
+                <p class="error-message" id="errorMessage"></p>
+                <div class="error-actions">
+                    <button class="action-btn primary" id="retryBtn">
+                        <i class="fas fa-redo"></i>
+                        Try Again
+                    </button>
+                    <button class="action-btn secondary" id="backToHomeBtn">
+                        <i class="fas fa-home"></i>
+                        Back to Home
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal for LLM.txt Content -->
+    <div class="modal" id="contentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">LLM.txt Content</h3>
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <pre id="modalContent"></pre>
+            </div>
+            <div class="modal-footer">
+                <button class="action-btn secondary" id="copyContentBtn">
+                    <i class="fas fa-copy"></i>
+                    Copy Content
+                </button>
+                <button class="action-btn primary" id="downloadContentBtn">
+                    <i class="fas fa-download"></i>
+                    Download
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
