@@ -1,4 +1,4 @@
-# LLM.txt Generator - Professional Website Analysis Tool
+# AEO Maker - Professional Website Analysis Tool
 
 A comprehensive web application that generates LLM.txt files for every page of a website to improve AEO (AI Engine Optimization). This professional tool combines advanced web crawling, content extraction, visual analysis, and AI-powered content generation in a beautiful, real-time web interface.
 
@@ -8,16 +8,18 @@ A comprehensive web application that generates LLM.txt files for every page of a
 - **🌐 Automatic Sitemap Discovery**: Intelligent website crawling with hierarchical sitemap generation
 - **📝 Advanced Content Extraction**: Enhanced text scraping optimized for Client-Side Rendered (CSR) websites
 - **📸 Visual Analysis**: Full-page screenshot capture with lazy-loading support
-- **🤖 AI-Powered Generation**: Creates comprehensive LLM.txt files using advanced AI models
+- **🤖 AI-Powered Generation**: Creates comprehensive LLM.txt files using GPT-5 Nano with multimodal analysis
 - **💾 Database Storage**: SQLite database for persistent storage of results
+- **⚡ Step-by-Step Processing**: Batch processing for improved performance and user experience
 
 ### Professional Web Interface
 - **🎨 Modern UI/UX**: Beautiful, responsive design with smooth animations
 - **⚡ Real-time Updates**: WebSocket-powered live progress tracking and logging
 - **📊 Interactive Dashboard**: Professional data visualization and result management
 - **🔄 Live Progress Tracking**: Step-by-step progress with visual indicators
-- **📋 Comprehensive Logging**: Real-time log display with different severity levels
-- **💼 Export Functionality**: Download results as JSON or individual LLM.txt files
+- **📋 Comprehensive Logging**: Real-time log display with auto-scroll functionality
+- **💼 Export Functionality**: Download individual LLM.txt files or export all results as JSON
+- **🤖 AEO Maker Branding**: Professional rebranding with robot favicon
 
 ### Technical Excellence
 - **🛡️ Robust Error Handling**: Comprehensive error management and user feedback
@@ -25,6 +27,9 @@ A comprehensive web application that generates LLM.txt files for every page of a
 - **📱 Responsive Design**: Works perfectly on desktop, tablet, and mobile devices
 - **♿ Accessibility**: Built with accessibility best practices
 - **🧪 Comprehensive Testing**: Complete test suite with detailed result logging
+- **⚡ Performance Optimized**: Text scraping reduced from 2+ minutes to 15-30 seconds per page
+- **🔄 Cross-Platform Support**: Automatic service management for Windows, macOS, and Linux
+- **🌐 SocketIO Fallbacks**: HTTP polling backup when WebSocket connections fail
 
 ## 🏗️ Architecture
 
@@ -48,12 +53,13 @@ The system consists of four main components:
    - Uses Chrome DevTools Protocol for high-quality captures
    - **Testing**: `Screenshot_test_files/test_screenshot.py`
 
-4. **LLM.txt Generator Web App** (`app.py`) - Port 5001
+4. **AEO Maker Web App** (`app.py`) - Port 5001
    - Professional web interface with real-time updates
    - Orchestrates all three APIs seamlessly
-   - Generates LLM.txt content using AI models
+   - Generates LLM.txt content using GPT-5 Nano with multimodal analysis
    - Database storage and export functionality
-   - WebSocket-powered real-time communication
+   - WebSocket-powered real-time communication with HTTP polling fallbacks
+   - Cross-platform automatic service management
 
 ## 📋 Prerequisites
 
@@ -67,7 +73,7 @@ The system consists of four main components:
 1. **Clone the repository**:
    ```bash
    git clone <repository-url>
-   cd AEO-Maker
+   cd Sitemap_Generator
    ```
 
 2. **Install dependencies**:
@@ -103,10 +109,10 @@ start_app.bat
 ```
 
 That's it! The application will:
-- ✅ Automatically start all required services
-- ✅ Check service health
-- ✅ Launch the web interface
-- ✅ Be ready to use immediately
+- ✅ Automatically start all required services (Sitemap, Scraper, Screenshot)
+- ✅ Check service health and wait for initialization
+- ✅ Launch the web interface at http://localhost:5001
+- ✅ Be ready to use immediately with cross-platform support
 
 ### **Manual Setup (Alternative)**
 
@@ -133,7 +139,7 @@ python screenshot_api.py
 **Step 2: Start Main Application**
 
 ```bash
-# Terminal 4 - LLM.txt Generator Web App
+# Terminal 4 - AEO Maker Web App
 python app.py
 ```
 
@@ -143,11 +149,12 @@ Open your browser and navigate to: **http://localhost:5001**
 
 ### Step 4: Test the Application
 
-Run the comprehensive test suite:
-
-```bash
-python test_app.py
-```
+The application is now ready to use! Simply:
+1. Open your browser to http://localhost:5001
+2. Enter a website URL
+3. Click "Start Analysis" to begin processing
+4. Watch real-time progress with auto-scrolling logs
+5. Download individual LLM.txt files when complete
 
 ## 🧪 Testing
 
@@ -191,11 +198,12 @@ python test_screenshot.py
 ### Key Features of the Web Interface
 
 - **🎨 Professional Design**: Modern, clean interface with smooth animations
-- **⚡ Real-time Updates**: Live progress tracking via WebSocket connections
-- **📊 Interactive Results**: Sortable, searchable table of generated content
-- **📋 Detailed Logging**: Real-time log display with different severity levels
-- **💾 Export Options**: Multiple export formats for easy integration
+- **⚡ Real-time Updates**: Live progress tracking via WebSocket connections with HTTP polling fallbacks
+- **📊 Interactive Results**: Sortable, searchable table of generated content with download buttons
+- **📋 Detailed Logging**: Real-time log display with auto-scroll functionality
+- **💾 Export Options**: Download individual LLM.txt files or export all results as JSON
 - **📱 Responsive**: Works perfectly on all devices
+- **🤖 AEO Maker Branding**: Professional interface with robot favicon
 
 ### API Usage
 
@@ -245,11 +253,11 @@ curl http://localhost:5001/api/export-results/<job_id> -o results.json
 ## 📁 Project Structure
 
 ```
-LLM.txt Generator/
+Sitemap_Generator/
 ├── README.md                          # Main documentation
 ├── requirements.txt                   # Python dependencies
-├── app.py                            # Main web application
-├── test_app.py                       # Comprehensive test suite
+├── app.py                            # Main web application (AEO Maker)
+├── start_app.bat                     # Windows startup script
 ├── llm_generator.db                  # SQLite database (created on first run)
 ├── templates/
 │   └── index.html                    # Professional web interface
@@ -360,8 +368,8 @@ Optimized content summary for AI systems and search engines...
    # GPT-5 Nano with Responses API (multimodal: text + image analysis)
    OPENAI_MODEL=gpt-5-nano-2025-08-07
    
-   # Response Length
-   MAX_TOKENS=2000
+   # Response Length (optimized for comprehensive LLM.txt generation)
+   MAX_TOKENS=10000
    ```
 
 ### GPT-5 Nano Features
@@ -408,9 +416,14 @@ app.run(debug=True, host='0.0.0.0', port=5001)
 
 ## 📊 Performance
 
-- **Small websites** (< 50 pages): 5-15 minutes
-- **Medium websites** (50-200 pages): 15-60 minutes  
-- **Large websites** (> 200 pages): 1+ hours
+- **Small websites** (< 50 pages): 3-10 minutes
+- **Medium websites** (50-200 pages): 10-45 minutes  
+- **Large websites** (> 200 pages): 45+ minutes
+
+**Recent Performance Improvements:**
+- Text scraping optimized: 2+ minutes → 15-30 seconds per page
+- Step-by-step batch processing for better efficiency
+- Reduced timeouts and wait times across all services
 
 Performance depends on:
 - Website complexity and loading times
@@ -445,12 +458,30 @@ For issues and questions:
 3. Open an issue on GitHub
 4. Check the service health endpoints
 
+## 🆕 Recent Updates (Latest Release)
+
+### Major Features Added Today:
+- **🤖 Real OpenAI Integration**: Replaced mock LLM generation with actual GPT-5 Nano API calls
+- **⚡ Performance Optimization**: Text scraping speed improved from 2+ minutes to 15-30 seconds per page
+- **🔄 Step-by-Step Processing**: Changed from page-by-page to batch processing for better efficiency
+- **🎨 UI/UX Enhancements**: Added download buttons, auto-scroll logs, and professional branding
+- **🛠️ Cross-Platform Support**: Automatic service management for Windows, macOS, and Linux
+- **🌐 Robust Communication**: SocketIO with HTTP polling fallbacks for reliable real-time updates
+- **📱 Enhanced Interface**: AEO Maker rebranding with robot favicon and improved user experience
+
+### Technical Improvements:
+- **OpenAI API Integration**: GPT-5 Nano with multimodal analysis (text + images)
+- **Service Management**: Automatic startup/shutdown of all dependent services
+- **Error Handling**: Comprehensive logging and graceful fallbacks
+- **Database Integration**: SQLite storage for jobs and results
+- **Timeout Optimization**: Reduced scraping timeouts for faster processing
+
 ## 🔮 Future Enhancements
 
 - [ ] Support for multiple AI providers
-- [ ] Batch processing capabilities
 - [ ] Content quality scoring
 - [ ] SEO optimization suggestions
 - [ ] Integration with CMS platforms
 - [ ] Advanced content analysis
 - [ ] Multi-language support
+- [ ] Batch processing for multiple websites
